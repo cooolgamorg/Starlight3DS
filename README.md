@@ -1,19 +1,14 @@
 # Luma3DS+
-*Noob-proof (N)3DS "Custom Firmware"*
+*Nintendo 3DS "Custom Firmware"*
 
-### What it is
-**Luma3DS** is a program to patch the system software of (New) Nintendo (2)3DS handheld consoles "on the fly", adding features such as per-game language settings, debugging capabilities for developers, and removing restrictions enforced by Nintendo such as the region lock.
+## What it is
+**Luma3DS+** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
+There's also some features taken from other luma forks as well and some that I added myself. Please check the [credits](https://github.com/cooolgamorg/Luma3DSplus?tab=readme-ov-file#credits) to see people who made this fork possible!
 
-It also allows you to run unauthorized ("homebrew") content by removing signature checks.
-To use it, you will need a console capable of running homebrew software on the Arm9 processor.
+Luma3DS+ requires a full-system persisent exploit such as [boot9strap](https://github.com/SciresM/boot9strap) to run.
 
-Since v8.0, Luma3DS has its own in-game menu, triggerable by <kbd>L+Down+Select</kbd> (see the [release notes](https://github.com/LumaTeam/Luma3DS/releases/tag/v8.0)).
-
-#
-### Changes with the official build
-Note: Most features are taken from [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) because the main goal of this build is updating DullPointer's fork to the latest luma version. There's also some features taken from other luma forks as well and some that I added myself.
-
-Note2: The config file is different from the original luma3DS, it's "configplus.ini" instead of "config.ini" to avoid conflicts if you want to switch between this modified version and the official one (like for playing CTGP-7 for example).
+## Changes with the official build
+Note: The config file is different from the original luma3DS, it's "configplus.ini" instead of "config.ini" to avoid conflicts if you want to switch between this modified version and the official one (like for playing CTGP-7 for example).
 
 - Removed auto-copy to ctrnand
 - Restored UNITINFO and enable rosalina on safe_firm options on the luma config menu (TWL patch option is now with "enable external firms and modules")
@@ -45,24 +40,23 @@ Note2: The config file is different from the original luma3DS, it's "configplus.
 - Continue running after a errdisp error happens, this is the same option as instant reboot because they kinda go together (you decide when to reboot after an error occur)
 - Added play coin maximize to rosalina menu -> [Original](https://github.com/Gruetzig/Luma3DS/commit/1e329b55dade61ba74a0bb1cc6e59d2504d0bde1)
 
-#
-### Compiling
-* Prerequisites
-    1. git
-    2. [makerom](https://github.com/jakcron/Project_CTR) in PATH
-    3. [firmtool](https://github.com/TuxSH/firmtool)
-    4. Up-to-date devkitARM+libctru
-1. Clone the repository with `git clone https://github.com/LumaTeam/Luma3DS.git`
-2. Run `make`.
+## Compiling
 
-    The produced `boot.firm` is meant to be copied to the root of your SD card for usage with Boot9Strap.
+To build Luma3DS+:
+1. Get the prerequites:
+* git
+* up-to-date devkitARM and libctru
+* [makerom](https://github.com/jakcron/Project_CTR) in PATH
+* [firmtool](https://github.com/TuxSH/firmtool) installed
+2. Clone the repository with `git clone https://github.com/cooolgamorg/Luma3DSplus.git`
+3. Run `make`.
 
-#
-### Setup / Usage / Features
-See https://github.com/LumaTeam/Luma3DS/wiki
+The produced `boot.firm` is meant to be copied to the root of your SD card for usage with Boot9Strap.
 
-#
-### Credits
+## Setup / Usage / Features
+See https://github.com/LumaTeam/Luma3DS/wiki (needs rework)
+
+## Credits
 See https://github.com/LumaTeam/Luma3DS/wiki/Credits for original Luma3DS credits
 
 People who made this fork possible:
@@ -75,8 +69,9 @@ People who made this fork possible:
 - truedread
 - Gruetzig
 
-#
-### Licensing
+## Licensing
 This software is licensed under the terms of the GPLv3. You can find a copy of the license in the LICENSE.txt file.
 
 Files in the GDB stub are instead triple-licensed as MIT or "GPLv2 or any later version", in which case it's specified in the file header.
+
+By contributing to this repository, you agree to license your changes to the project's owners.
