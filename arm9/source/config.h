@@ -37,6 +37,7 @@
 #define CONFIG_FILE         "configplus.ini"
 #define CONFIG_VERSIONMAJOR 3
 #define CONFIG_VERSIONMINOR 12
+#define CONFIG_VERSIONMINOR 12
 
 #define BOOTCFG_NAND         BOOTCONFIG(0, 1)
 #define BOOTCFG_EMUINDEX     BOOTCONFIG(1, 3)
