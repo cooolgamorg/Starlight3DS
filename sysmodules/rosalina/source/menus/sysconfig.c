@@ -38,7 +38,6 @@
 Menu sysconfigMenu = {
     "System configuration menu",
     {
-        { "Control volume", METHOD, .method=&SysConfigMenu_AdjustVolume},
         { "Control Wireless connection", METHOD, .method = &SysConfigMenu_ControlWifi },
         { "Toggle Power Button", METHOD, .method=&SysConfigMenu_TogglePowerButton },
         { "Toggle Power to Card Slot", METHOD, .method=&SysConfigMenu_ToggleCardIfPower},
