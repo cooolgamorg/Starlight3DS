@@ -3,7 +3,7 @@
 
 ## What it is
 **Starlight3DS** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
-There's also some features taken from other luma forks as well and some that I added myself. Please check the [credits](https://github.com/cooolgamorg/Luma3DSplus?tab=readme-ov-file#credits) to see people who made this fork possible!
+There's also some features taken from other luma forks as well and some that I added myself. Please check the [credits](https://github.com/cooolgamorg/Starlight3DS?tab=readme-ov-file#credits) to see people who made this fork possible!
 
 Starlight3DS requires a full-system persisent exploit such as [boot9strap](https://github.com/SciresM/boot9strap) to run.
 
@@ -48,7 +48,7 @@ To build Starlight3DS:
 * up-to-date devkitARM and libctru
 * [makerom](https://github.com/jakcron/Project_CTR) in PATH
 * [firmtool](https://github.com/TuxSH/firmtool) installed
-2. Clone the repository with `git clone https://github.com/cooolgamorg/Luma3DSplus.git`
+2. Clone the repository with `git clone https://github.com/cooolgamorg/Starlight3DS.git`
 3. Run `make`.
 
 The produced `boot.firm` is meant to be copied to the root of your SD card for usage with Boot9Strap.
