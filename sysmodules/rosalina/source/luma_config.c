@@ -132,9 +132,9 @@ static size_t LumaConfig_SaveLumaIniConfigToStr(char *out, const CfgData *cfg)
     }
 
     if (GET_VERSION_REVISION(version) != 0) {
-        sprintf(lumaVerStr, "Luma3DS+ v%d.%d.%d", (int)GET_VERSION_MAJOR(version), (int)GET_VERSION_MINOR(version), (int)GET_VERSION_REVISION(version));
+        sprintf(lumaVerStr, "Starlight3DS v%d.%d.%d", (int)GET_VERSION_MAJOR(version), (int)GET_VERSION_MINOR(version), (int)GET_VERSION_REVISION(version));
     } else {
-        sprintf(lumaVerStr, "Luma3DS+ v%d.%d",  (int)GET_VERSION_MAJOR(version), (int)GET_VERSION_MINOR(version));
+        sprintf(lumaVerStr, "Starlight3DS v%d.%d",  (int)GET_VERSION_MAJOR(version), (int)GET_VERSION_MINOR(version));
     }
 
     if (isRelease) {

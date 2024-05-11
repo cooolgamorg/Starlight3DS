@@ -1,11 +1,11 @@
-# Luma3DS+
+# Starlight3DS
 *Nintendo 3DS "Custom Firmware"*
 
 ## What it is
-**Luma3DS+** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
+**Starlight3DS** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
 There's also some features taken from other luma forks as well and some that I added myself. Please check the [credits](https://github.com/cooolgamorg/Luma3DSplus?tab=readme-ov-file#credits) to see people who made this fork possible!
 
-Luma3DS+ requires a full-system persisent exploit such as [boot9strap](https://github.com/SciresM/boot9strap) to run.
+Starlight3DS requires a full-system persisent exploit such as [boot9strap](https://github.com/SciresM/boot9strap) to run.
 
 ## Changes with the official build
 Note: The config file is different from the original luma3DS, it's "configplus.ini" instead of "config.ini" to avoid conflicts if you want to switch between this modified version and the official one (like for playing CTGP-7 for example).
@@ -42,7 +42,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
 
 ## Compiling
 
-To build Luma3DS+:
+To build Starlight3DS:
 1. Get the prerequites:
 * git
 * up-to-date devkitARM and libctru
