@@ -225,9 +225,9 @@ u32 installK11Extension(u8 *pos, u32 size, bool needToInitSd, u32 baseK11VA, u32
     info->bottomScreenFilter = configData.bottomScreenFilter;
     info->autobootTwlTitleId = configData.autobootTwlTitleId;
     info->autobootCtrAppmemtype = configData.autobootCtrAppmemtype;
-    info->versionMajor = VERSION_MAJOR;
-    info->versionMinor = VERSION_MINOR;
-    info->versionBuild = VERSION_BUILD;
+    info->versionMajor = BASE_VERSION_MAJOR;
+    info->versionMinor = BASE_VERSION_MINOR;
+    info->versionBuild = BASE_VERSION_BUILD;
 
     if(ISRELEASE) info->flags = 1;
     if(ISN3DS) info->flags |= 1 << 4;

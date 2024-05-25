@@ -16,11 +16,15 @@ export VERSION_BUILD	:=	$(shell git describe --tags --match v[0-9]* | cut -c2- |
 export COMMIT			:=	$(shell git rev-parse --short=8 HEAD)
 export IS_RELEASE		:=	0
 
+export BASE_VERSION_MAJOR	:=	13
+export BASE_VERSION_MINOR	:=	1
+export BASE_VERSION_BUILD	:=	1
+
 ifeq ($(strip $(REVISION)),)
-	export REVISION			:=	v1.5.1
+	export REVISION			:=	v1.5.2
 	export VERSION_MAJOR	:=	1
 	export VERSION_MINOR	:=	5
-	export VERSION_BUILD	:=	1
+	export VERSION_BUILD	:=	2
 endif
 
 ifeq ($(strip $(COMMIT)),)
@@ -169,7 +173,9 @@ $(OFILES_SRC)	: $(HFILES_BIN)
 memory.o strings.o:	CFLAGS +=	-O3
 patches.o config.o:	CFLAGS +=	-DCONFIG_TITLE="\"$(APP_TITLE) $(REVISION) configuration\""\
 								-DVERSION_MAJOR="$(VERSION_MAJOR)" -DVERSION_MINOR="$(VERSION_MINOR)"\
-								-DVERSION_BUILD="$(VERSION_BUILD)" -DISRELEASE="$(IS_RELEASE)" -DCOMMIT_HASH="0x$(COMMIT)"
+								-DVERSION_BUILD="$(VERSION_BUILD)" -DISRELEASE="$(IS_RELEASE)" -DCOMMIT_HASH="0x$(COMMIT)"\
+								-DBASE_VERSION_MAJOR="$(BASE_VERSION_MAJOR)" -DBASE_VERSION_MINOR="$(BASE_VERSION_MINOR)"\
+								-DBASE_VERSION_BUILD="$(BASE_VERSION_BUILD)" 
 config.o ini.o:		CFLAGS +=	-DINI_HANDLER_LINENO=1 -DINI_STOP_ON_FIRST_ERROR=1
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
