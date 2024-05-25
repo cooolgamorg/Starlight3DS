@@ -732,18 +732,6 @@ static bool readConfigMcu(void)
         checksum += data[i];
     checksum = ~checksum;
 
-    if (checksum != configDataMcu.checksum || configDataMcu.lumaVersion > curVer)
-    {
-        // Invalid data stored in MCU...
-        memset(&configDataMcu, 0, sizeof(CfgDataMcu));
-        configData.bootConfig = 0;
-        // Perform upgrade process (ignoring failures)
-        doLumaUpgradeProcess();
-        writeConfigMcu();
-
-        return false;
-    }
-
     if (configDataMcu.lumaVersion < curVer)
     {
         // Perform upgrade process (ignoring failures)

@@ -481,16 +481,14 @@ bool doLumaUpgradeProcess(void)
     // Ensure CTRNAND is mounted
     remountCtrNandPartition(false);
 
-    // Try to boot.firm to CTRNAND, when applicable, removed because it can be annoying sometimes
-#if 0 // #ifndef BUILD_FOR_EXPLOIT_DEV
+    // Try to boot.firm to CTRNAND, when applicable
     if (isSdMode && memcmp(launchedPathForFatfs, "sdmc:", 5) == 0)
-        ok = fileCopy(launchedPathForFatfs, "nand:/boot.firm", true, fileCopyBuffer, sizeof(fileCopyBuffer));
-#else
-    (void)ok;
-#endif
+        // Check if a boot.firm is already there
+        if(getFileSize("nand:/boot.firm") < 100000) // Luma is bigger than that, we assume a normal boot.firm is around this size
+            ok = fileCopy(launchedPathForFatfs, "nand:/boot.firm", true, fileCopyBuffer, sizeof(fileCopyBuffer));
 
     // Try to backup essential files
-    if (getFileSize("sdmc:/gm9/out/essential.exefs") < 0x10000) // Check if gm9-created essential.exefs doesn't exist/doesn't have a normal size to avoid useless copy
+    if (getFileSize("sdmc:/gm9/out/essential.exefs") < 8704) // Check if gm9-created essential.exefs doesn't exist/doesn't have a normal size to avoid useless copy
         ok2 = backupEssentialFiles();
 
     // Clean up some of the old files, commented because they can be useful if you decide to dual boot with a older luma
