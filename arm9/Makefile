@@ -17,9 +17,9 @@ export COMMIT			:=	$(shell git rev-parse --short=8 HEAD)
 export IS_RELEASE		:=	0
 
 ifeq ($(strip $(REVISION)),)
-	export REVISION			:=	v0.0.0-0
-	export VERSION_MAJOR	:=	0
-	export VERSION_MINOR	:=	0
+	export REVISION			:=	v1.5.0-0
+	export VERSION_MAJOR	:=	1
+	export VERSION_MINOR	:=	5
 	export VERSION_BUILD	:=	0
 endif
 

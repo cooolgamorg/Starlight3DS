@@ -426,9 +426,9 @@ void SysConfigMenu_Tip(void)
         Draw_DrawString(10, 80, COLOR_WHITE, "  sleep mode)");
         Draw_DrawString(10, 90, COLOR_WHITE, "  * Press Y to force blue led (allows bypassing");
         Draw_DrawString(10, 100, COLOR_WHITE, "  toggle led restriction on low battery)");
-        Draw_DrawString(10, 120, COLOR_WHITE, "While system is running:");
-        Draw_DrawString(10, 140, COLOR_WHITE, "  * Press A + B + X + Y + Start to instant reboot");
-        Draw_DrawString(10, 150, COLOR_WHITE, "  * Press Start + Select to toggle bottom screen");
+        Draw_DrawString(10, 120, COLOR_WHITE, "While the system is running:");
+        Draw_DrawString(10, 140, COLOR_WHITE, "  * Press Start + Select to toggle bottom screen");
+        Draw_DrawString(10, 150, COLOR_WHITE, "    (You can toggle this feature in Extra Config)");
 
         Draw_FlushFramebuffer();
         Draw_Unlock();
