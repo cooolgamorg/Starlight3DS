@@ -65,10 +65,8 @@ static const char *singleOptionIniNamesBoot[] = {
     "app_syscore_threads_on_core_2",
     "show_system_settings_string",
     "show_gba_boot_screen",
-    "allow_updown_leftright_dsi",
     "cut_wifi_sleep_mode",
     "use_dev_unitinfo",
-    "enable_dsi_external_filter",
     "disable_arm11_exception_handlers",
     "enable_safe_firm_rosalina",
     "disable_errdisp_enable_instant_reboot",
@@ -648,9 +646,9 @@ static size_t saveLumaIniConfigToStr(char *out)
         (int)CONFIG(AUTOBOOTEMU), (int)CONFIG(LOADEXTFIRMSANDMODULES),
         (int)CONFIG(PATCHGAMES), (int)CONFIG(REDIRECTAPPTHREADS),
         (int)CONFIG(PATCHVERSTRING), (int)CONFIG(SHOWGBABOOT),
-        (int)CONFIG(ALLOWUPDOWNLEFTRIGHTDSI), (int)CONFIG(CUTWIFISLEEP),
-        (int)CONFIG(PATCHUNITINFO), (int)CONFIG(DISABLEARM11EXCHANDLERS),
-        (int)CONFIG(ENABLESAFEFIRMROSALINA), (int)CONFIG(NOERRDISPINSTANTREBOOT),
+        (int)CONFIG(CUTWIFISLEEP), (int)CONFIG(PATCHUNITINFO),
+        (int)CONFIG(DISABLEARM11EXCHANDLERS), (int)CONFIG(ENABLESAFEFIRMROSALINA),
+        (int)CONFIG(NOERRDISPINSTANTREBOOT),
 
         1 + (int)MULTICONFIG(DEFAULTEMU), 4 - (int)MULTICONFIG(BRIGHTNESS),
         splashPosStr, (unsigned int)cfg->splashDurationMsec,
@@ -830,7 +828,6 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                                "( ) Redirect app. syscore threads to core2",
                                                "( ) Show NAND or user string in System Settings",
                                                "( ) Show GBA boot screen in patched AGB_FIRM",
-                                               "( ) Allow Left+Right / Up+Down combos for DSi",
                                                "( ) Cut 3DS Wifi in sleep mode",
                                                "( ) Enable development UNITINFO",
                                                "( ) Disable ARM11 Exception loaders",
@@ -925,12 +922,6 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
                                                  "Enable showing the GBA boot screen\n"
                                                  "when booting GBA games.",
 
-                                                 "Allow Left+Right and Up+Down button\n"
-                                                 "combos (using DPAD and CPAD\n"
-                                                 "simultaneously) in DS(i) software.\n\n"
-                                                 "Commercial software filter these\n"
-                                                 "combos on their own too, though.",
-
                                                  "Cut the 3DS wifi in sleep mode.\n\n"
                                                  "This saves battery but prevent some\n"
                                                  "features like streetpass or spotpass\n"
@@ -1013,7 +1004,6 @@ void configMenu(bool oldPinStatus, u32 oldPinMode)
         { .visible = true },
         { .visible = true },
         { .visible = ISN3DS },
-        { .visible = true },
         { .visible = true },
         { .visible = true },
         { .visible = true },
