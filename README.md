@@ -10,7 +10,7 @@ Starlight3DS requires a full-system persisent exploit such as [boot9strap](https
 ## Changes with the official build
 Note: The config file is different from the original luma3DS, it's "configplus.ini" instead of "config.ini" to avoid conflicts if you want to switch between this modified version and the official one (like for playing CTGP-7 for example).
 
-- Removed auto-copy to ctrnand
+- Changed auto-copy to ctrnand and essential backup checks to be less annoying
 - Restored UNITINFO and enable rosalina on safe_firm options on the luma config menu (TWL patch option is now with "enable external firms and modules")
 - Removed the need of having both "Game Patching" and "External Firms and Modules" enabled for patching sysmodules, just "External Firms and Modules" need to be enabled
 - Added shortcuts:
