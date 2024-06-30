@@ -68,6 +68,7 @@ People who made this fork possible:
 - Core-2-Extreme
 - truedread
 - Gruetzig
+- Tekito-256
 
 ## Licensing
 This software is licensed under the terms of the GPLv3. You can find a copy of the license in the LICENSE.txt file.
