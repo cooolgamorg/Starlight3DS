@@ -462,7 +462,10 @@ static Result   FindPluginFile(u64 tid, u8 defaultFound)
 
     if (R_FAILED((res = FSUSER_OpenDirectory(&dir, sdmcArchive, fsMakePath(PATH_ASCII, g_path))))){
         if(defaultFound == 1)
+        {
+            res = 0;
             goto defaultplg;
+        }
         else
             goto exit;
     }
@@ -554,7 +557,7 @@ static Result   OpenFile(IFile *file, const char *path)
 
 static Result   OpenPluginFile(u64 tid, IFile *plugin)
 {
-    static u8 defaultFound = 1;
+    u8 defaultFound = 1;
 
     if (OpenFile(plugin, g_defaultPath))
         defaultFound = 0;
