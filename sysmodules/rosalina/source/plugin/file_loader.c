@@ -561,18 +561,14 @@ static Result   OpenPluginFile(u64 tid, IFile *plugin)
 
     if (OpenFile(plugin, g_defaultPath))
         defaultFound = 0;
-    else
-        IFile_Close(plugin);
 
-    if (R_FAILED(FindPluginFile(tid, defaultFound)))
+    if (R_FAILED(FindPluginFile(tid, defaultFound))){
+        if(defaultFound == 1)
+            IFile_Close(plugin);
         return -1;
-
-
-    if(PluginLoaderCtx.header.isDefaultPlugin == 1)
-    {
-        if(OpenFile(plugin, g_defaultPath)) return -1;
     }
-    else
+
+    if(PluginLoaderCtx.header.isDefaultPlugin == 0)
     {
         if(OpenFile(plugin, g_path)) return -1;
     }
