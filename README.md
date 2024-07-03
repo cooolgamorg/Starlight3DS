@@ -39,6 +39,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
 - Changed colors on config menu because why not
 - Continue running after a errdisp error happens, this is the same option as instant reboot because they kinda go together (you decide when to reboot after an error occur)
 - Added play coin maximize to rosalina menu -> [Original](https://github.com/Gruetzig/Luma3DS/commit/1e329b55dade61ba74a0bb1cc6e59d2504d0bde1)
+- Plugin Selector -> [Original](https://github.com/Tekito-256/Luma3DS)
 
 ## Compiling
 
@@ -63,7 +64,7 @@ People who made this fork possible:
 - DullPointer
 - Sono
 - Nutez
-- cooolgamer,
+- cooolgamer
 - DeathChaos25
 - Core-2-Extreme
 - truedread

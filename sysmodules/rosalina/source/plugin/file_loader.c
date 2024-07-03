@@ -260,7 +260,7 @@ void FileOptions(PluginEntry *entries, u8 *count, u8 index)
             }
             else if(selected == 1)
             {
-                if(ConfirmOperation("Are you sure you want to set this plugin as default?"))
+                if(ConfirmOperation("Are you sure you want to set this plugin\nas default?"))
                 {
                     for(u8 i = 0; i < *count; i++)
                     {
@@ -277,7 +277,7 @@ void FileOptions(PluginEntry *entries, u8 *count, u8 index)
             }
             else if(selected == 2)
             {
-                if(ConfirmOperation("Are you sure you want to remove this plugin from default?"))
+                if(ConfirmOperation("Are you sure you want to remove this plugin\nfrom default?"))
                 {
                     entries[index].isDefault = false;
 
@@ -441,7 +441,7 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
     return filename;
 }
 
-static Result   FindPluginFile(u64 tid)
+static Result   FindPluginFile(u64 tid, u8 defaultFound)
 {
     char                filename[256];
     u32                 entriesNb = 0;
@@ -455,14 +455,18 @@ static Result   FindPluginFile(u64 tid)
     memset(entries, 0, sizeof(g_entries));
     memset(foundPlugins, 0, sizeof(g_foundPlugins));
     sprintf(g_path, g_dirPath, tid);
+    strcat(g_path, "/");
 
     if (R_FAILED((res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))))
         goto exit;
 
-    if (R_FAILED((res = FSUSER_OpenDirectory(&dir, sdmcArchive, fsMakePath(PATH_ASCII, g_path)))))
-        goto exit;
+    if (R_FAILED((res = FSUSER_OpenDirectory(&dir, sdmcArchive, fsMakePath(PATH_ASCII, g_path))))){
+        if(defaultFound == 1)
+            goto defaultplg;
+        else
+            goto exit;
+    }
 
-    strcat(g_path, "/");
     while (foundPluginCount < 10 && R_SUCCEEDED(FSDIR_Read(dir, &entriesNb, 10, entries)))
     {
         if (entriesNb == 0)
@@ -505,6 +509,13 @@ static Result   FindPluginFile(u64 tid)
         }
     }
 
+defaultplg:
+
+    if(foundPluginCount < 10 && defaultFound == 1){
+        strcpy(foundPlugins[foundPluginCount].name, "<default.3gx>");
+        foundPluginCount++;
+    }
+
     if (!foundPluginCount)
         res = MAKERESULT(28, 4, 0, 1018);
     else
@@ -514,6 +525,11 @@ static Result   FindPluginFile(u64 tid)
         if (!name)
         {
             res = MAKERESULT(28, 4, 0, 1018);
+        }
+        else if(name[0] == '<') // This isn't the best way to check this, but this is fine because it is a illegal character for a file name
+        {
+            PluginLoaderCtx.pluginPath = g_defaultPath;
+            PluginLoaderCtx.header.isDefaultPlugin = 1;
         }
         else
         {
@@ -538,15 +554,24 @@ static Result   OpenFile(IFile *file, const char *path)
 
 static Result   OpenPluginFile(u64 tid, IFile *plugin)
 {
-    if (R_FAILED(FindPluginFile(tid)) || OpenFile(plugin, g_path))
-    {
-        // Try to open default plugin
-        if (OpenFile(plugin, g_defaultPath))
-            return -1;
+    static u8 defaultFound = 1;
 
-        PluginLoaderCtx.pluginPath = g_defaultPath;
-        PluginLoaderCtx.header.isDefaultPlugin = 1;
-        return 0;
+    if (OpenFile(plugin, g_defaultPath))
+        defaultFound = 0;
+    else
+        IFile_Close(plugin);
+
+    if (R_FAILED(FindPluginFile(tid, defaultFound)))
+        return -1;
+
+
+    if(PluginLoaderCtx.header.isDefaultPlugin == 1)
+    {
+        if(OpenFile(plugin, g_defaultPath)) return -1;
+    }
+    else
+    {
+        if(OpenFile(plugin, g_path)) return -1;
     }
 
     return 0;
