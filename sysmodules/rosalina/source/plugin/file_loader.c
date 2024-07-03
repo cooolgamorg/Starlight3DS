@@ -570,6 +570,9 @@ static Result   OpenPluginFile(u64 tid, IFile *plugin)
 
     if(PluginLoaderCtx.header.isDefaultPlugin == 0)
     {
+        if(defaultFound == 1)
+            IFile_Close(plugin);
+        return -1;
         if(OpenFile(plugin, g_path)) return -1;
     }
 
