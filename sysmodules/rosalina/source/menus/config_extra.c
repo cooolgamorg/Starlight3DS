@@ -6,14 +6,15 @@
 #include "menus.h"
 #include "menus/config_extra.h"
 
-config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleBtmLCD = true };
+config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleLCD = true, .toggleBtmLCD = true };
 bool configExtraSaved = false;
 
-static const char menuText[5][32] = {
+static const char menuText[6][32] = {
     "Automatically suppress LEDs",
     "Cut power to TWL Flashcards",
     "Home button opens Rosalina",
-    "st+sel toggle bottom LCD",
+    "st+sel toggle LCD backlight",
+    "toggle bottom LCD",
     "Save config. Changes saved"
 };
 
@@ -25,8 +26,9 @@ Menu configExtraMenu = {
         { menuText[0], METHOD, .method = &ConfigExtra_SetSuppressLeds},
         { menuText[1], METHOD, .method = &ConfigExtra_SetCutSlotPower},
         { menuText[2], METHOD, .method = &ConfigExtra_SetHomeToRosalina},
-        { menuText[3], METHOD, .method = &ConfigExtra_SetToggleBtmLCD},
-        { menuText[4], METHOD, .method = &ConfigExtra_WriteConfigExtra},
+        { menuText[3], METHOD, .method = &ConfigExtra_SetToggleLCD},
+        { menuText[4], METHOD, .method = &ConfigExtra_SetToggleBtmLCD},
+        { menuText[5], METHOD, .method = &ConfigExtra_WriteConfigExtra},
         {},
     }
 };
@@ -36,7 +38,7 @@ void ConfigExtra_SetSuppressLeds(void)
     configExtra.suppressLeds = !configExtra.suppressLeds;
     ConfigExtra_UpdateMenuItem(0, configExtra.suppressLeds);
     configExtraSaved = false;
-    ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
 void ConfigExtra_SetCutSlotPower(void) 
@@ -44,7 +46,7 @@ void ConfigExtra_SetCutSlotPower(void)
     configExtra.cutSlotPower = !configExtra.cutSlotPower;
     ConfigExtra_UpdateMenuItem(1, configExtra.cutSlotPower);
     configExtraSaved = false;
-    ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
 void ConfigExtra_SetHomeToRosalina(void) 
@@ -52,16 +54,25 @@ void ConfigExtra_SetHomeToRosalina(void)
     configExtra.homeToRosalina = !configExtra.homeToRosalina;
     ConfigExtra_UpdateMenuItem(2, configExtra.homeToRosalina);
     configExtraSaved = false;
-    ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
+}
+
+void ConfigExtra_SetToggleLCD(void)
+{
+    configExtra.toggleLCD = !configExtra.toggleLCD;
+    ConfigExtra_UpdateMenuItem(3, configExtra.toggleLCD);
+    configExtraSaved = false;
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
 void ConfigExtra_SetToggleBtmLCD(void)
 {
     configExtra.toggleBtmLCD = !configExtra.toggleBtmLCD;
-    ConfigExtra_UpdateMenuItem(3, configExtra.toggleBtmLCD);
+    ConfigExtra_UpdateMenuItem(4, configExtra.toggleBtmLCD);
     configExtraSaved = false;
-    ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
+
 
 void ConfigExtra_UpdateMenuItem(int menuIndex, bool value)
 {
@@ -74,8 +85,9 @@ void ConfigExtra_UpdateAllMenuItems(void)
     ConfigExtra_UpdateMenuItem(0, configExtra.suppressLeds);
     ConfigExtra_UpdateMenuItem(1, configExtra.cutSlotPower);
     ConfigExtra_UpdateMenuItem(2, configExtra.homeToRosalina);
-    ConfigExtra_UpdateMenuItem(3, configExtra.toggleBtmLCD);
-    ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+    ConfigExtra_UpdateMenuItem(3, configExtra.toggleLCD);
+    ConfigExtra_UpdateMenuItem(4, configExtra.toggleBtmLCD);
+    ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
 void ConfigExtra_ReadConfigExtra(void)
@@ -115,7 +127,7 @@ void ConfigExtra_WriteConfigExtra(void)
         if(R_SUCCEEDED(res)) 
         {
             configExtraSaved = true;
-            ConfigExtra_UpdateMenuItem(4, configExtraSaved);
+            ConfigExtra_UpdateMenuItem(5, configExtraSaved);
         }
     }
 }
