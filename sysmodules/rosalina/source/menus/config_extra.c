@@ -12,10 +12,10 @@ bool configExtraSaved = false;
 static const char menuText[6][32] = {
     "Automatically suppress LEDs",
     "Cut power to TWL Flashcards",
-    "Home button opens Rosalina",
+    " Home button opens Rosalina",
     "st+sel toggle LCD backlight",
-    "toggle top LCD backlight",
-    "Save config. Changes saved"
+    " * toggle top LCD backlight",
+    " Save config. Changes saved"
 };
 
 static char menuDisplay[5][64];
