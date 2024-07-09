@@ -321,32 +321,32 @@ void menuThreadMain(void)
             MCUHWC_ReadRegister(0x0F, &result, 1); // https://www.3dbrew.org/wiki/I2C_Registers#Device_3
             mcuHwcExit();
 	    //Check config file to determine which backlight to toggle
-	    bool toggleLcd = configExtra.toggleBtmLCD;
+	    bool toggleLcd = configExtra.toggleTopLCD;
 	    if (toggleLcd)
 	    {
-            	toggleLcdStatus = (result >> 5) & 1; // right shift result to bit 5 ("Bottom screen backlight on") and perform bitwise AND with 1
+            	toggleLcdStatus = (result >> 6) & 1;
 	    }
 	    else
-            	toggleLcdStatus = (result >> 6) & 1;
+            	toggleLcdStatus = (result >> 5) & 1; // right shift result to bit 5 ("Bottom screen backlight on") and perform bitwise AND with 1
 
             gspLcdInit();
             if(toggleLcdStatus)
 	    {
                 if(toggleLcd)
 		{
-                    GSPLCD_PowerOffBacklight(BIT(GSP_SCREEN_BOTTOM));
+                    GSPLCD_PowerOffBacklight(BIT(GSP_SCREEN_TOP));
 		}
 		else
-                    GSPLCD_PowerOffBacklight(BIT(GSP_SCREEN_TOP));
+                    GSPLCD_PowerOffBacklight(BIT(GSP_SCREEN_BOTTOM));
             }
 	    else
 	    {
                 if(toggleLcd)
 		{
-                    GSPLCD_PowerOnBacklight(BIT(GSP_SCREEN_BOTTOM));
+                    GSPLCD_PowerOnBacklight(BIT(GSP_SCREEN_TOP));
 		}
 		else
-                    GSPLCD_PowerOnBacklight(BIT(GSP_SCREEN_TOP));
+                    GSPLCD_PowerOnBacklight(BIT(GSP_SCREEN_BOTTOM));
             }
             gspLcdExit();
             while (!(waitInput() & (KEY_SELECT | KEY_START)));

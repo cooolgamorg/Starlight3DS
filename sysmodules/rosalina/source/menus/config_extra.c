@@ -6,7 +6,7 @@
 #include "menus.h"
 #include "menus/config_extra.h"
 
-config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleLCD = true, .toggleBtmLCD = true };
+config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleLCD = true, .toggleTopLCD = true };
 bool configExtraSaved = false;
 
 static const char menuText[6][32] = {
@@ -14,7 +14,7 @@ static const char menuText[6][32] = {
     "Cut power to TWL Flashcards",
     "Home button opens Rosalina",
     "st+sel toggle LCD backlight",
-    "toggle bottom LCD",
+    "toggle top LCD backlight",
     "Save config. Changes saved"
 };
 
@@ -27,7 +27,7 @@ Menu configExtraMenu = {
         { menuText[1], METHOD, .method = &ConfigExtra_SetCutSlotPower},
         { menuText[2], METHOD, .method = &ConfigExtra_SetHomeToRosalina},
         { menuText[3], METHOD, .method = &ConfigExtra_SetToggleLCD},
-        { menuText[4], METHOD, .method = &ConfigExtra_SetToggleBtmLCD},
+        { menuText[4], METHOD, .method = &ConfigExtra_SetToggleTopLCD},
         { menuText[5], METHOD, .method = &ConfigExtra_WriteConfigExtra},
         {},
     }
@@ -65,10 +65,10 @@ void ConfigExtra_SetToggleLCD(void)
     ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
-void ConfigExtra_SetToggleBtmLCD(void)
+void ConfigExtra_SetToggleTopLCD(void)
 {
-    configExtra.toggleBtmLCD = !configExtra.toggleBtmLCD;
-    ConfigExtra_UpdateMenuItem(4, configExtra.toggleBtmLCD);
+    configExtra.toggleTopLCD = !configExtra.toggleTopLCD;
+    ConfigExtra_UpdateMenuItem(4, configExtra.toggleTopLCD);
     configExtraSaved = false;
     ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
@@ -86,7 +86,7 @@ void ConfigExtra_UpdateAllMenuItems(void)
     ConfigExtra_UpdateMenuItem(1, configExtra.cutSlotPower);
     ConfigExtra_UpdateMenuItem(2, configExtra.homeToRosalina);
     ConfigExtra_UpdateMenuItem(3, configExtra.toggleLCD);
-    ConfigExtra_UpdateMenuItem(4, configExtra.toggleBtmLCD);
+    ConfigExtra_UpdateMenuItem(4, configExtra.toggleTopLCD);
     ConfigExtra_UpdateMenuItem(5, configExtraSaved);
 }
 
