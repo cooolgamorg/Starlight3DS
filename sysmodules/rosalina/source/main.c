@@ -52,6 +52,7 @@
 
 bool isN3DS;
 bool wifiOnBeforeSleep;
+bool hasTopScreen = false;
 
 Result __sync_init(void);
 Result __sync_fini(void);
@@ -88,6 +89,13 @@ void initSystem(void)
     mappableInit(0x10000000, 0x14000000);
 
     isN3DS = svcGetSystemInfo(&out, 0x10001, 0) == 0;
+
+    u8 sysModel;
+    cfguInit();
+    CFGU_GetSystemModel(&sysModel);
+    cfguExit();
+    if(sysModel != 3)
+        hasTopScreen = true;
 
     svcGetSystemInfo(&out, 0x10000, 0x101);
     menuCombo = out == 0 ? DEFAULT_MENU_COMBO : (u32)out;

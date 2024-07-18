@@ -73,6 +73,7 @@ extern bool rosalinaOpen;
 
 // From main.c
 extern bool isN3DS;
+extern bool hasTopScreen;
 extern bool menuShouldExit;
 extern bool preTerminationRequested;
 extern Handle preTerminationEvent;

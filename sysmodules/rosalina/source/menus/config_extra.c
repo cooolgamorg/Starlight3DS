@@ -12,10 +12,10 @@ bool configExtraSaved = false;
 static const char menuText[6][32] = {
     "Automatically suppress LEDs",
     "Cut power to TWL Flashcards",
-    " Home button opens Rosalina",
-    "st+sel toggle LCD backlight",
-    " * toggle top LCD backlight",
-    " Save config. Changes saved"
+    "Home button opens Rosalina ",
+    "St+sel toggle LCD backlight",
+    "* toggle top LCD backlight",
+    "Save config. Changes saved "
 };
 
 static char menuDisplay[5][64];
@@ -26,12 +26,17 @@ Menu configExtraMenu = {
         { menuText[0], METHOD, .method = &ConfigExtra_SetSuppressLeds},
         { menuText[1], METHOD, .method = &ConfigExtra_SetCutSlotPower},
         { menuText[2], METHOD, .method = &ConfigExtra_SetHomeToRosalina},
-        { menuText[3], METHOD, .method = &ConfigExtra_SetToggleLCD},
-        { menuText[4], METHOD, .method = &ConfigExtra_SetToggleTopLCD},
+        { menuText[3], METHOD, .method = &ConfigExtra_SetToggleLCD, .visibility = &topScreenCheck},
+        { menuText[4], METHOD, .method = &ConfigExtra_SetToggleTopLCD, .visibility = &topScreenCheck},
         { menuText[5], METHOD, .method = &ConfigExtra_WriteConfigExtra},
         {},
     }
 };
+
+bool topScreenCheck(void)
+{
+    return hasTopScreen;
+} 
 
 void ConfigExtra_SetSuppressLeds(void) 
 {
@@ -82,6 +87,11 @@ void ConfigExtra_UpdateMenuItem(int menuIndex, bool value)
 
 void ConfigExtra_UpdateAllMenuItems(void)
 {
+    u8 sysModel;
+    cfguInit();
+    CFGU_GetSystemModel(&sysModel);
+    cfguExit();
+    
     ConfigExtra_UpdateMenuItem(0, configExtra.suppressLeds);
     ConfigExtra_UpdateMenuItem(1, configExtra.cutSlotPower);
     ConfigExtra_UpdateMenuItem(2, configExtra.homeToRosalina);

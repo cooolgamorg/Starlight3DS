@@ -22,12 +22,11 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
   - Automatically suppress LEDs
   - Cut power to TWL Flashcards allowing to save battery
   - Home button opens Rosalina
-  - start + select shortcut to toggle bottom screen (enabled by default)
+  - start + select shortcut to toggle top/bottom screen (enabled on bottom screen by default)
 - Added Day and Night mode (lite):
   - You can choose the screen brightness
   - You can choose to turn on or off LEDs
   - Those will be applied at a desired time
-- Improved system modules speed -> [Original](https://github.com/Core-2-Extreme/Luma3DS/commit/523b7f75d32e5795c67a16ecd45b28fe188bb08d)
 - Added n3ds clock + L2 status in rosalina menu -> [Original](https://github.com/DullPointer/Luma3DS/commit/2dbfa8b5c9b719b7f3056691f54332f42da6de8d)
 - Added Software Volume Control -> (now merged with the official luma3ds one)
 - Added extended brightness presets and per-screen brightness -> [Original](https://github.com/DullPointer/Luma3DS/commit/83e8d471a377bc6960fae00d6694f5fe86dcca42) WARNING: a little broken and can exceed the limits!
@@ -61,15 +60,16 @@ See https://github.com/LumaTeam/Luma3DS/wiki (needs rework)
 See https://github.com/LumaTeam/Luma3DS/wiki/Credits for original Luma3DS credits
 
 People who made this fork possible:
-- @DullPointer
+- [DullPointer](https://github.com/DullPointer)
 - Sono
 - Nutez
-- @cooolgamer
-- @DeathChaos25
-- @Core-2-Extreme
-- @truedread
-- @Gruetzig
-- @Tekito-256
+- [cooolgamer](https://github.com/cooolgamer)
+- [DeathChaos25](https://github.com/DeathChaos25)
+- [truedread](https://github.com/truedread)
+- [Gruetzig](https://github.com/Gruetzig)
+- [Tekito-256](https://github.com/Tekito-256)
+- [exalented](https://github.com/exalented)
+- [Alexyo21](https://github.com/Alexyo21)
 
 ## Licensing
 This software is licensed under the terms of the GPLv3. You can find a copy of the license in the LICENSE.txt file.

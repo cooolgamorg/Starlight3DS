@@ -313,8 +313,8 @@ void menuThreadMain(void)
             __builtin_unreachable();
         }
 
-        // toggle bottom screen combo
-        if(((scanHeldKeys() & (KEY_SELECT | KEY_START)) == (KEY_SELECT | KEY_START)) && configExtra.toggleLCD)
+        // toggle screen combo
+        if(configExtra.toggleLCD && hasTopScreen && ((scanHeldKeys() & (KEY_SELECT | KEY_START)) == (KEY_SELECT | KEY_START)))
         {
             u8 result, toggleLcdStatus;
             mcuHwcInit();
@@ -579,13 +579,13 @@ void menuShow(Menu *root)
         else if(pressed & KEY_DOWN)
         {
             selectedItem = menuAdvanceCursor(selectedItem, numItems, 1);
-            if (menuItemIsHidden(&currentMenu->items[selectedItem]))
+            while (menuItemIsHidden(&currentMenu->items[selectedItem]))
                 selectedItem = menuAdvanceCursor(selectedItem, numItems, 1);
         }
         else if(pressed & KEY_UP)
         {
             selectedItem = menuAdvanceCursor(selectedItem, numItems, -1);
-            if (menuItemIsHidden(&currentMenu->items[selectedItem]))
+            while (menuItemIsHidden(&currentMenu->items[selectedItem]))
                 selectedItem = menuAdvanceCursor(selectedItem, numItems, -1);
         }
         else if(pressed & KEY_START)

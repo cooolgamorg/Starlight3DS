@@ -9,6 +9,7 @@ typedef struct {
 extern config_extra configExtra;
 extern Menu configExtraMenu;
 
+bool topScreenCheck();
 void ConfigExtra_SetSuppressLeds();
 void ConfigExtra_SetCutSlotPower();
 void ConfigExtra_SetHomeToRosalina();
