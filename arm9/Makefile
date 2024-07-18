@@ -21,10 +21,10 @@ export BASE_VERSION_MINOR	:=	1
 export BASE_VERSION_BUILD	:=	2
 
 ifeq ($(strip $(REVISION)),)
-	export REVISION			:=	v1.6.0
+	export REVISION			:=	v1.6.1
 	export VERSION_MAJOR	:=	1
 	export VERSION_MINOR	:=	6
-	export VERSION_BUILD	:=	0
+	export VERSION_BUILD	:=	1
 endif
 
 ifeq ($(strip $(COMMIT)),)

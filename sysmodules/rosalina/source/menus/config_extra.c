@@ -6,7 +6,7 @@
 #include "menus.h"
 #include "menus/config_extra.h"
 
-config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleLCD = true, .toggleTopLCD = true };
+config_extra configExtra = { .suppressLeds = false, .cutSlotPower = false, .homeToRosalina = false, .toggleLCD = true, .toggleTopLCD = false };
 bool configExtraSaved = false;
 
 static const char menuText[6][32] = {
@@ -14,7 +14,7 @@ static const char menuText[6][32] = {
     "Cut power to TWL Flashcards",
     "Home button opens Rosalina ",
     "St+sel toggle LCD backlight",
-    "* toggle top LCD backlight",
+    "* toggle top LCD backlight ",
     "Save config. Changes saved "
 };
 

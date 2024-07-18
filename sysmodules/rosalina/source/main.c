@@ -90,13 +90,6 @@ void initSystem(void)
 
     isN3DS = svcGetSystemInfo(&out, 0x10001, 0) == 0;
 
-    u8 sysModel;
-    cfguInit();
-    CFGU_GetSystemModel(&sysModel);
-    cfguExit();
-    if(sysModel != 3)
-        hasTopScreen = true;
-
     svcGetSystemInfo(&out, 0x10000, 0x101);
     menuCombo = out == 0 ? DEFAULT_MENU_COMBO : (u32)out;
 
@@ -327,6 +320,12 @@ int main(void)
 {
     Sleep__Init();
     PluginLoader__Init();
+
+    u8 sysModel;
+    cfguInit();
+    CFGU_GetSystemModel(&sysModel);
+    cfguExit();
+    hasTopScreen = sysModel != 3; // 3 = o2ds
 
     ConfigExtra_ReadConfigExtra();
     if (configExtra.cutSlotPower)
