@@ -45,6 +45,12 @@
 u32 menuCombo = 0;
 bool isHidInitialized = false;
 u32 mcuFwVersion = 0;
+u8 mcuInfoTable[9] = {0};
+bool mcuInfoTableRead = false;
+
+const char *topScreenType = NULL;
+const char *bottomScreenType = NULL;
+bool areScreenTypesInitialized = false;
 bool rosalinaOpen = false;
 
 // libctru redefinition:
@@ -241,6 +247,50 @@ static Result menuUpdateMcuInfo(void)
     return res;
 }
 
+static const char *menuGetScreenTypeStr(u8 vendorId)
+{
+    switch (vendorId)
+    {
+        case 1:  return "IPS"; // SHARP
+        case 12: return "TN";  // JDN
+        default: return "unknown";
+    }
+}
+
+static void menuReadScreenTypes(void)
+{
+    if (areScreenTypesInitialized)
+        return;
+
+    if (!isN3DS)
+    {
+        // Old3DS never have IPS screens and GetVendors is not implemented
+        topScreenType = "TN";
+        bottomScreenType = "TN";
+        areScreenTypesInitialized = true;
+    }
+    else
+    {
+        srvSetBlockingPolicy(false);
+
+        Result res = gspLcdInit();
+        if (R_SUCCEEDED(res))
+        {
+            u8 vendors = 0;
+            if (R_SUCCEEDED(GSPLCD_GetVendors(&vendors)))
+            {
+                topScreenType = menuGetScreenTypeStr(vendors >> 4);
+                bottomScreenType = menuGetScreenTypeStr(vendors & 0xF);
+                areScreenTypesInitialized = true;
+            }
+
+            gspLcdExit();
+        }
+
+        srvSetBlockingPolicy(true);
+    }
+}
+
 static inline u32 menuAdvanceCursor(u32 pos, u32 numItems, s32 displ)
 {
     return (pos + numItems + displ) % numItems;
@@ -280,13 +330,15 @@ void menuThreadMain(void)
 
     ConfigExtra_UpdateAllMenuItems();
 
-    while (!isServiceUsable("ac:u") || !isServiceUsable("hid:USER") || !isServiceUsable("gsp::Gpu") || !isServiceUsable("cdc:CHK"))
+    while (!isServiceUsable("ac:u") || !isServiceUsable("hid:USER") || !isServiceUsable("gsp::Gpu") || !isServiceUsable("gsp::Lcd") || !isServiceUsable("cdc:CHK"))
         svcSleepThread(250 * 1000 * 1000LL);
 
     handleShellOpened();
 
     hidInit(); // assume this doesn't fail
     isHidInitialized = true;
+
+    menuReadScreenTypes();
 
     s64 out = 0;
     svcGetSystemInfo(&out, 0x10000, 3);
@@ -454,6 +506,14 @@ static void menuDraw(Menu *menu, u32 selected)
         int n = sprintf(ipBuffer, "%hhu.%hhu.%hhu.%hhu", addr[0], addr[1], addr[2], addr[3]);
         Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_WHITE, ipBuffer);
     }
+#if 0
+    else if (areScreenTypesInitialized)
+    {
+        char screenTypesBuffer[32];
+        int n = sprintf(screenTypesBuffer, "T: %s | B: %s", topScreenType, bottomScreenType);
+        Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_WHITE, screenTypesBuffer);
+    }
+#endif
     else
         Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - SPACING_X * 15, 10, COLOR_WHITE, "%15s", "");
 

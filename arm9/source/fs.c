@@ -230,6 +230,12 @@ bool fileCopy(const char *pathSrc, const char *pathDst, bool replace, void *tmpB
     return true;
 }
 
+bool createDir(const char *path)
+{
+    FRESULT res = f_mkdir(path);
+    return res == FR_OK || res == FR_EXIST;
+}
+
 bool findPayload(char *path, u32 pressed)
 {
     const char *pattern;
@@ -494,6 +500,9 @@ bool doLumaUpgradeProcess(void)
     // Clean up some of the old files, commented because they can be useful if you decide to dual boot with a older luma
     // fileDelete("sdmc:/luma/config.bin");
     // fileDelete("nand:/rw/luma/config.bin");
+
+    createDir("sdmc:/luma/payloads");
+    createDir("nand:/rw/luma/payloads");
 
     return ok && ok2;
 }

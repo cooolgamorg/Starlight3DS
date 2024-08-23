@@ -41,5 +41,7 @@ void RosalinaMenu_PowerOptions(void);
 void RosalinaMenu_Reboot(void);
 void RosalinaMenu_Cheats(void);
 
+void RosalinaMenu_ShowSystemInfo();
+
 bool rosalinaMenuShouldShowDebugInfo(void);
 void RosalinaMenu_ShowDebugInfo(void);
