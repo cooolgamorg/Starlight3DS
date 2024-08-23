@@ -58,7 +58,7 @@ Menu rosalinaMenu = {
         { "Miscellaneous options...", MENU, .menu = &miscellaneousMenu },
         { "Save settings", METHOD, .method = &RosalinaMenu_SaveSettings },
         { "Power options...", METHOD, .method = &RosalinaMenu_PowerOptions },
-        { "Reboot", METHOD, .method = &RosalinaMenu_Reboot },
+        { "System info", METHOD, .method = &RosalinaMenu_ShowSystemInfo },
         { "Credits", METHOD, .method = &RosalinaMenu_ShowCredits },
         { "Debug info", METHOD, .method = &RosalinaMenu_ShowDebugInfo, .visibility = &rosalinaMenuShouldShowDebugInfo },
         {},

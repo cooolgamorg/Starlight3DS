@@ -218,7 +218,7 @@ void Redshift_UpdateNightLightStatuses(void)
     sprintf(nightLightSubMenuBuf, "Night/Light Config%s", (nightLightSettingsRead && !redshiftFilterSelected) ? statusBuf : "");
 
     rosalinaMenu.items[7].title = nightLightMainMenuBuf;
-    screenFiltersMenu.items[11].title = nightLightSubMenuBuf;
+    screenFiltersMenu.items[12].title = nightLightSubMenuBuf;
 }
 
 void Redshift_ConfigureNightLightSettings(void)
