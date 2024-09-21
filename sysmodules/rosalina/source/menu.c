@@ -44,8 +44,9 @@
 
 u32 menuCombo = 0;
 bool isHidInitialized = false;
+bool isQtmInitialized = false;
 u32 mcuFwVersion = 0;
-u8 mcuInfoTable[9] = {0};
+u8 mcuInfoTable[10] = {0};
 bool mcuInfoTableRead = false;
 
 const char *topScreenType = NULL;
@@ -291,6 +292,24 @@ static void menuReadScreenTypes(void)
     }
 }
 
+static void menuInitializeQtm(void)
+{
+    if (isQtmInitialized)
+        return;
+
+    // Steal QTM handle from GSP, because there is a limit of 3 sessions (or 2 before 9.3) for ALL qtm services
+    Handle qtmHandle = 0;
+    for (int i = 0; i < 20 && !qtmIsInitialized(); i++)
+    {
+        if (R_SUCCEEDED(svcControlService(SERVICEOP_STEAL_CLIENT_SESSION, &qtmHandle, "qtm:sp")))
+            *qtmGetSessionHandle() = qtmHandle;
+        else
+            svcSleepThread(100 * 100 * 1000LL);
+    }
+
+    isQtmInitialized = qtmIsInitialized();
+}
+
 static inline u32 menuAdvanceCursor(u32 pos, u32 numItems, s32 displ)
 {
     return (pos + numItems + displ) % numItems;
@@ -332,6 +351,14 @@ void menuThreadMain(void)
 
     while (!isServiceUsable("ac:u") || !isServiceUsable("hid:USER") || !isServiceUsable("gsp::Gpu") || !isServiceUsable("gsp::Lcd") || !isServiceUsable("cdc:CHK"))
         svcSleepThread(250 * 1000 * 1000LL);
+
+    if (isN3DS)
+    {
+        while (!isServiceUsable("qtm:u"))
+            svcSleepThread(250 * 1000 * 1000LL);
+        menuInitializeQtm();
+        N3DSMenu_UpdateStatus();
+    }
 
     handleShellOpened();
 
