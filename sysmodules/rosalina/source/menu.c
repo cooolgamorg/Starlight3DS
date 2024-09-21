@@ -344,9 +344,6 @@ u32 g_blockMenuOpen = 0;
 
 void menuThreadMain(void)
 {
-    if(isN3DS)
-        N3DSMenu_UpdateStatus();
-
     ConfigExtra_UpdateAllMenuItems();
 
     while (!isServiceUsable("ac:u") || !isServiceUsable("hid:USER") || !isServiceUsable("gsp::Gpu") || !isServiceUsable("gsp::Lcd") || !isServiceUsable("cdc:CHK"))

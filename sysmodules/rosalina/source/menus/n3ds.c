@@ -73,7 +73,7 @@ void N3DSMenu_UpdateStatus(void)
 
     sprintf(new3dsMenuBuf, "New 3DS settings: [%luMHz%s", clkRate == 268 ? 268 : (u32)higherClkRate, L2CacheEnabled ? " & L2]" : "]");
 
-    rosalinaMenu.items[8].title = new3dsMenuBuf;
+    rosalinaMenu.items[4].title = new3dsMenuBuf;
     if (N3DSMenu_CheckNotN2dsXl())
     {
         // Read status
