@@ -253,10 +253,8 @@ static Result menuUpdateMcuInfo(void)
         mcuFwVersion = SYSTEM_VERSION(major - 0x10, minor, 0);
     }
 
-    // https://www.3dbrew.org/wiki/I2C_Registers#Device_3
-    MCUHWC_ReadRegister(0x58, dspVolumeSlider, 2); // Register-mapped ADC register
-    MCUHWC_ReadRegister(0x27, volumeSlider + 0, 1); // Raw volume slider state
-    MCUHWC_ReadRegister(0x09, volumeSlider + 1, 1); // Volume slider state
+    if (!mcuInfoTableRead)
+        mcuInfoTableRead = R_SUCCEEDED(MCUHWC_ReadRegister(0x7F, mcuInfoTable, sizeof(mcuInfoTable)));
 
     svcCloseHandle(*mcuHwcHandlePtr);
     return res;
