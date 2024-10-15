@@ -60,6 +60,7 @@ void detectAndProcessExceptionDumps(void)
     const vu8 *stackDump = (vu8 *)regs + dumpHeader->registerDumpSize + dumpHeader->codeDumpSize;
     const vu8 *additionalData = stackDump + dumpHeader->stackDumpSize;
 
+
     static const char *handledExceptionNames[] = {
         "FIQ", "undefined instruction", "prefetch abort", "data abort"
     },
@@ -76,6 +77,12 @@ void detectAndProcessExceptionDumps(void)
         "Translation - Section", "Translation - Page", "Access bit - Section", "Access bit - Page",
         "Domain - Section", "Domain - Page", "Permission - Section", "Permission - Page",
         "Precise External Abort", "Imprecise External Abort", "Debug event"
+    },
+                      *exceptionMessages[] = {
+        "Uh oh, an error has occured", "Oops, your system crashed!", "Your 3DS ran into a problem and needs to reboot",
+        "Nope, your 3DS cannot handle that.", "Your 3DS is not happy with you", "Uhhhhhhh...",
+        "Maybe you should take a break.", "Oof.", "Did you try to turn it off and back on?",
+        ":(", "Maybe don't do that again", "Skill issue", "Congrats! You won a crash!"
     };
 
     static const u32 faultStatusValues[] = {
@@ -85,7 +92,7 @@ void detectAndProcessExceptionDumps(void)
 
     initScreens();
 
-    drawString(true, 10, 10, COLOR_RED, "An exception occurred");
+    drawFormattedString(true, 10, 10, COLOR_RED, "%s", exceptionMessages[((regs[10] ^ regs[13] ^ regs[14] ^ regs[15]) + *stackDump) % (sizeof(exceptionMessages) / sizeof(exceptionMessages[0]))]); // "Random" message
     u32 posY;
     if(dumpHeader->processor == 11) posY = drawFormattedString(true, 10, 30, COLOR_WHITE, "Processor:       Arm11 (core %u)", dumpHeader->core);
     else posY = drawString(true, 10, 30, COLOR_WHITE, "Processor:       Arm9");

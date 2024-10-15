@@ -243,7 +243,7 @@ static void ERRF_DisplayError(ERRF_FatalErrInfo *info, bool continueAfterErrdisp
 {
     Draw_Lock();
 
-    u32 posY = Draw_DrawString(10, 10, COLOR_RED, "An error occurred (ErrDisp)");
+    u32 posY = Draw_DrawString(10, 10, COLOR_RED, "An error occurred (ErrDisp) - StarLight3DS");
     char buf[0x400];
 
     ERRF_FormatError(buf, info, false);

@@ -149,7 +149,7 @@ void error(const char *fmt, ...)
     va_end(args);
 
     initScreens();
-    drawString(true, 10, 10, COLOR_RED, "An error has occurred:");
+    drawString(true, 10, 10, COLOR_RED, "An error has occurred!");
     u32 posY = drawString(true, 10, 30, COLOR_WHITE, buf);
     drawString(true, 10, posY + 2 * SPACING_Y, COLOR_WHITE, "Press any button to shutdown");
 
