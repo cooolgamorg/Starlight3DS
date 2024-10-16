@@ -80,9 +80,10 @@ void detectAndProcessExceptionDumps(void)
     },
                       *exceptionMessages[] = {
         "Uh oh, an error has occured", "Oops, your system crashed!", "Your 3DS ran into a problem and needs to reboot",
-        "Nope, your 3DS cannot handle that.", "Your 3DS is not happy with you", "Uhhhhhhh...",
+        "Nope, your 3DS cannot handle that.", "Task failed successfully", "Uhhhhhhh...",
         "Maybe you should take a break.", "Oof.", "Did you try to turn it off and back on?",
-        ":(", "Maybe don't do that again", "Skill issue", "Congrats! You won a crash!"
+        ":(", "Maybe don't do that again", "Skill issue", "Congrats! You won a crash!",
+        "Welcome to Arch Linux!", "Game Over.", "Nah I'd crash"
     };
 
     static const u32 faultStatusValues[] = {
