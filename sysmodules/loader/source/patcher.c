@@ -646,25 +646,36 @@ static inline bool patchLayeredFs(u64 progId, u8 *code, u32 size, u32 textSize, 
                         (u32)progId == 0x0008B400;   //TWN MK7
                         // Exclude CHN as it never got updates
 
+/*
+    bool isTLoDW2 = (u32)progId == 0x0016FA00 || //JPN TLoDW2
+                    (u32)progId == 0x00186300 || //EUR TLodW2
+                    (u32)progId == 0x00186600;   //USA TLodW2
+*/
     const char *updateRomFsMount;
 
     if (isMarioKart7)
     {
         updateRomFsMount = "pat1"; // Isolated to prevent false-positives
     }
-
+/*
+    else if (isTLoDW2)
+    {
+        updateRomFsMount = "rom2:";
+    }
+*/
     else
     {
         u32 updateRomFsIndex;
 
-        //Locate update RomFS
+        //Locate update RomFS - this changes from the official luma3ds, it may trigger false positives, no issues were repported about this yet.
         for(updateRomFsIndex = 0; updateRomFsIndex < sizeof(updateRomFsMounts) / sizeof(char *) - 1; updateRomFsIndex++)
         {
             u32 patternSize = strlen(updateRomFsMounts[updateRomFsIndex]);
-            u8 temp[7];
+            u8 temp[8];
             temp[0] = 0;
             memcpy(temp + 1, updateRomFsMounts[updateRomFsIndex], patternSize);
-            if(memsearch(code, temp, size, patternSize + 1) != NULL) break;
+            temp[patternSize + 1] = '\0';
+            if(memsearch(code, temp + 1, size, patternSize) != NULL) break; // Here's the change, do not check if the first is null, as games like TLoDW isn't null
         }
         updateRomFsMount = updateRomFsMounts[updateRomFsIndex];
     }
