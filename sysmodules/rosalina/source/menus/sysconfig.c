@@ -313,7 +313,7 @@ static Result SysConfigMenu_ApplyVolumeOverride(void)
     //     - shutter volume is set to the override instead of its default 100% value
     //     - due to implementation details, having the shutter sound effect play will
     //       make this feature stop working until the volume override is reapplied by
-    //       going baxck to this menu
+    //       going back to this menu
 
     // Original credit: profi200
 
