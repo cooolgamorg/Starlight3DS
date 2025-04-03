@@ -256,6 +256,10 @@ static Result menuUpdateMcuInfo(void)
     if (!mcuInfoTableRead)
         mcuInfoTableRead = R_SUCCEEDED(MCUHWC_ReadRegister(0x7F, mcuInfoTable, sizeof(mcuInfoTable)));
 
+    MCUHWC_ReadRegister(0x58, dspVolumeSlider, 2); // Register-mapped ADC register
+    MCUHWC_ReadRegister(0x27, volumeSlider + 0, 1); // Raw volume slider state
+    MCUHWC_ReadRegister(0x09, volumeSlider + 1, 1); // Volume slider state
+
     svcCloseHandle(*mcuHwcHandlePtr);
     return res;
 }
