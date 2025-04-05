@@ -44,26 +44,29 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
         return entries[0].name;
 
     IFile configFile;
-    if(R_SUCCEEDED(IFile_Open(&configFile, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, g_configPath), FS_OPEN_READ))) {
 
-        u64 fileSize = 0;
-        if(R_SUCCEEDED(IFile_GetSize(&configFile, &fileSize)) && fileSize > 0) {
-            
-            u64 bytesRead = 0;
-            char configContent[fileSize + 1];
-            if(R_SUCCEEDED(IFile_Read(&configFile, &bytesRead, configContent, fileSize)) && bytesRead > 0) {
-                configContent[bytesRead] = '\0'; // Null-terminate the string
+    if (!(HID_PAD & KEY_SELECT)){
+        if(R_SUCCEEDED(IFile_Open(&configFile, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, g_configPath), FS_OPEN_READ))) {
 
-                // Check if the configContent is in the list of found plugins
-                for(u8 i = 0; i < count; i++) {
-                    if(strcmp(entries[i].name, configContent) == 0) {
-                        IFile_Close(&configFile);
-                        return entries[i].name;
+            u64 fileSize = 0;
+            if(R_SUCCEEDED(IFile_GetSize(&configFile, &fileSize)) && fileSize > 0) {
+                
+                u64 bytesRead = 0;
+                char configContent[fileSize + 1];
+                if(R_SUCCEEDED(IFile_Read(&configFile, &bytesRead, configContent, fileSize)) && bytesRead > 0) {
+                    configContent[bytesRead] = '\0'; // Null-terminate the string
+    
+                    // Check if the configContent is in the list of found plugins
+                    for(u8 i = 0; i < count; i++) {
+                        if(strcmp(entries[i].name, configContent) == 0) {
+                            IFile_Close(&configFile);
+                            return entries[i].name;
+                        }
                     }
                 }
             }
+            IFile_Close(&configFile);
         }
-        IFile_Close(&configFile);
     }
 
     menuEnter();
