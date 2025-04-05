@@ -570,7 +570,7 @@ static void menuDraw(Menu *menu, u32 selected)
         float coe = Volume_ExtractVolume(dspVolumeSlider[0], dspVolumeSlider[1], volumeSlider[0]);
         u32 out = (u32)((coe * 100.0F) + (1 / 256.0F));
         char volBuf[32];
-        int n2 = sprintf(volBuf, "Volume: %lu%%", out);
+        int n2 = sprintf(volBuf, "Volume slider: %lu%%", out);
         if(miniSocEnabled)
         {
             Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n2, SCREEN_BOT_HEIGHT - 30, COLOR_WHITE, volBuf);

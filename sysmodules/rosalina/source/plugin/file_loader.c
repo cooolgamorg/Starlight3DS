@@ -13,9 +13,11 @@
 static FS_DirectoryEntry   g_entries[10];
 static PluginEntry         g_foundPlugins[10];
 
-static char        g_path[256];
+static char        g_path[64];
+static char        g_configPath[64];
 static const char *g_dirPath = "/luma/plugins/%016llX";
 static const char *g_defaultPath = "/luma/plugins/default.3gx";
+static const char *g_defaultPluginConfig = "/luma/plugins/%016llX/defaultPlugin.txt";
 u64                g_titleId;
 
 // pluginLoader.s
@@ -41,6 +43,29 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
     if(count == 1)
         return entries[0].name;
 
+    IFile configFile;
+    if(R_SUCCEEDED(IFile_Open(&configFile, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, g_configPath), FS_OPEN_READ))) {
+
+        u64 fileSize = 0;
+        if(R_SUCCEEDED(IFile_GetSize(&configFile, &fileSize)) && fileSize > 0) {
+            
+            u64 bytesRead = 0;
+            char configContent[fileSize + 1];
+            if(R_SUCCEEDED(IFile_Read(&configFile, &bytesRead, configContent, fileSize)) && bytesRead > 0) {
+                configContent[bytesRead] = '\0'; // Null-terminate the string
+
+                // Check if the configContent is in the list of found plugins
+                for(u8 i = 0; i < count; i++) {
+                    if(strcmp(entries[i].name, configContent) == 0) {
+                        IFile_Close(&configFile);
+                        return entries[i].name;
+                    }
+                }
+            }
+        }
+        IFile_Close(&configFile);
+    }
+
     menuEnter();
 
     ClearScreenQuickly();
@@ -50,10 +75,9 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
         u32 posY;
 
         Draw_Lock();
-        Draw_ClearFramebuffer();
         Draw_DrawString(10, 10, COLOR_TITLE, "Plugin selector");
         posY = Draw_DrawString(20, 30, COLOR_WHITE, "Some 3gx files were found.");
-        posY = Draw_DrawString(20, posY + 10, COLOR_WHITE, "[A] Select, [B] Cancel");
+        posY = Draw_DrawString(20, posY + 10, COLOR_WHITE, "[A] Select, [B] Cancel, [X] Set Default & Load");
         posY = Draw_DrawString(20, posY + 15, COLOR_LIME, "Plugins:");
 
         for(u8 i = 0; i < count; i++)
@@ -95,8 +119,31 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
         {
             break;
         }
+        else if(keys & KEY_X)
+        {
+            if(holding == -1)
+            {
+                // Save the selected plugin name to the config file
+                if (R_SUCCEEDED(IFile_Open(&configFile, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, ""), fsMakePath(PATH_ASCII, g_configPath), FS_OPEN_WRITE | FS_OPEN_CREATE))) {
+                    u64 bytesWritten = 0;
+                    if(R_SUCCEEDED(IFile_Write(&configFile, &bytesWritten, entries[selected].name, strlen(entries[selected].name), FS_WRITE_FLUSH)))
+                    {
+                        filename = entries[selected].name;
+                        break;
+                    }
+                    else
+                    {
+                        Draw_DrawString(20, 20, COLOR_RED, "Failed to save default plugin.");
+                    }
+                    IFile_Close(&configFile);
+                } else {
+                    Draw_DrawString(20, 20, COLOR_RED, "Failed to open config file.");
+                }
+            }
+        }
         else if(keys & KEY_DOWN)
         {
+            Draw_ClearFramebuffer();
             if(holding == -1 && ++selected >= count)
                 selected = 0;
             else if(holding != -1 && holding < count - 1)
@@ -109,6 +156,7 @@ static char *AskForFileName(PluginEntry *entries, u8 count)
         }
         else if(keys & KEY_UP)
         {
+            Draw_ClearFramebuffer();
             if(holding == -1 && selected-- <= 0)
                 selected = count - 1;
             else if(holding > 0)
@@ -140,6 +188,7 @@ static Result   FindPluginFile(u64 tid, u8 defaultFound)
     memset(entries, 0, sizeof(g_entries));
     memset(foundPlugins, 0, sizeof(g_foundPlugins));
     sprintf(g_path, g_dirPath, tid);
+    sprintf(g_configPath, g_defaultPluginConfig, tid);
     strcat(g_path, "/");
 
     if (R_FAILED((res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))))
