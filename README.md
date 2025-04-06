@@ -73,6 +73,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
 **Starlight3DS issues:**
 
 * **Some games such as Donkey Kong Country Returns 3D doesn't work**: I geniunely have no clue why this happen, I can't test it in my side because I don't have the game. Even if I could, I don't know how to investigate this issue. Help is welcomed! Discuss about this issue [In this issue](https://github.com/cooolgamorg/Starlight3DS/issues/17)
+* **Top screen doesn't use the boundaries correctly in the change screen brightness menu (n3ds with IPS screens)**: This may be caused by IPS screens on new 3ds, I tested it on my own and it seems safe so far, but it *may* break and set the brightness very high, DO NOT use this and report this issue if this happens!
 
 ## Building from source
 

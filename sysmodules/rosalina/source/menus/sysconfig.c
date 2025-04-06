@@ -502,10 +502,10 @@ void SysConfigMenu_ChangeScreenBrightness(void)
         posY = Draw_DrawString(10, posY, COLOR_TITLE, "Press A to begin, B to exit.\n\n");
 
         posY = Draw_DrawString(10, posY, COLOR_RED, "WARNING: \n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * top screen may not respect boundaries.\n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    this is tested and confirmed to be safe.\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * top screen may not respect the limits,\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    please be careful while using this.\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    (more details in the readme on github)\n");
         posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * all changes revert on shell reopening.\n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * bottom framebuffer will be visible until exit.\n");
         Draw_FlushFramebuffer();
         Draw_Unlock();
 
