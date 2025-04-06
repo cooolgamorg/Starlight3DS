@@ -18,13 +18,13 @@ export IS_RELEASE		:=	0
 
 export BASE_VERSION_MAJOR	:=	13
 export BASE_VERSION_MINOR	:=	3
-export BASE_VERSION_BUILD	:=	0
+export BASE_VERSION_BUILD	:=	2
 
 ifeq ($(strip $(REVISION)),)
-	export REVISION			:=	v1.6.3
+	export REVISION			:=	v1.7.0
 	export VERSION_MAJOR	:=	1
-	export VERSION_MINOR	:=	6
-	export VERSION_BUILD	:=	3
+	export VERSION_MINOR	:=	7
+	export VERSION_BUILD	:=	0
 endif
 
 ifeq ($(strip $(COMMIT)),)

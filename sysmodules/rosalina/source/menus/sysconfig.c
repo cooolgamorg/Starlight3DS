@@ -646,6 +646,8 @@ void SysConfigMenu_Tip(void)
         Draw_DrawString(10, 120, COLOR_WHITE, "While the system is running:");
         Draw_DrawString(10, 140, COLOR_WHITE, "  * Press Start + Select to toggle a screen");
         Draw_DrawString(10, 150, COLOR_WHITE, "    (You can set this feature in Extra Config)");
+        Draw_DrawString(10, 160, COLOR_WHITE, "  * Hold Select while launching a game to open");
+        Draw_DrawString(10, 170, COLOR_WHITE, "    the plugin selector if default is set");
 
         Draw_FlushFramebuffer();
         Draw_Unlock();

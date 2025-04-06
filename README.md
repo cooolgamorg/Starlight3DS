@@ -11,7 +11,7 @@
 ## What it is
 **Starlight3DS** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
 
-There's also some features taken from other luma forks as well and some that I added myself. Please check the [credits](https://github.com/cooolgamorg/Starlight3DS?tab=readme-ov-file#credits) to see people who made this fork possible!
+There's also some features taken from other luma forks as well and some that I added myself. **Please check the [credits](https://github.com/cooolgamorg/Starlight3DS?tab=readme-ov-file#credits) to see people who made this fork possible!**
 
 Starlight3DS requires a full-system persisent exploit such as [boot9strap](https://github.com/SciresM/boot9strap) to run.
 
@@ -23,7 +23,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
 - Removed the need of having both "Game Patching" and "External Firms and Modules" enabled for patching sysmodules, just "External Firms and Modules" need to be enabled
 - Added shortcuts:
   - Press start + select to toggle bottom screen (nice when you watch videos) inspired by [This](https://github.com/DullPointer/Luma3DS/commit/9fea831656446cbaa2b5b4f6364407bb1b35dee7)
-  - Press A + B + X + Y + Start to instantly reboot the console. Useful in case of freeze, but can corrupt your sdcard. This is why this option is now hidden in the `config.ini` file
+  - Press A + B + X + Y + Start to instantly reboot the console. Useful in case of freeze, but can potentially corrupt your sdcard. This is why this option is now hidden in the `config.ini` file
   - Press Start on Rosalina menu to toggle wifi -> [Original](https://github.com/DullPointer/Luma3DS/commit/c1a20558bed3d792d54069719a898006af20ba85)
   - Press Select on Rosalina menu to toggle LEDs -> [Original](https://github.com/DullPointer/Luma3DS/commit/fa70d374c00e39dee8b9ef54f60deb1da35a0c51) (and press Y to force blue led as a workaround when the battery is low)
 - Added [Extra Config menu](https://github.com/DullPointer/Luma3DS/commit/174ed486ab59bd249488c9035682fa7d058d1e80) including:
@@ -33,7 +33,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
   - start + select shortcut to toggle top/bottom screen (enabled on bottom screen by default)
 - Added Day and Night mode (lite):
   - You can choose the screen brightness
-  - You can choose to turn on or off LEDs
+  - You can choose to turn on or off the LEDs
   - Those will be applied at a desired time
 - Added n3ds clock + L2 status in rosalina menu -> [Original](https://github.com/DullPointer/Luma3DS/commit/2dbfa8b5c9b719b7f3056691f54332f42da6de8d)
 - Added Software Volume Control -> (now merged with the official luma3ds one)
@@ -47,6 +47,7 @@ Note: The config file is different from the original luma3DS, it's "configplus.i
 - Continue running after a errdisp error happens, this is the same option as instant reboot because they kinda go together (you decide when to reboot after an error occur)
 - Added play coin maximize to rosalina menu -> [Original](https://github.com/Gruetzig/Luma3DS/commit/1e329b55dade61ba74a0bb1cc6e59d2504d0bde1)
 - Plugin Selector -> [Original](https://github.com/Tekito-256/Luma3DS)
+  - You can set a plugin to be automatically loaded by default. If a default is set, hold Select while lauinching a game to open the plugin selector menu
 
 ## Maintainers
 **Original Luma3DS mainteners**:
