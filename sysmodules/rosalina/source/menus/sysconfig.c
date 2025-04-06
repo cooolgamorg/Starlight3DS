@@ -458,10 +458,10 @@ void SysConfigMenu_ChangeScreenBrightness(void)
     // gsp:LCD GetLuminance is stubbed on O3DS so we have to implement it ourselves... damn it.
     u32 luminanceTop = getCurrentLuminance(true);
     u32 luminanceBot = getCurrentLuminance(false);
-    u32 minLum = getMinLuminancePreset();
-    u32 maxLum = getMaxLuminancePreset();
-    u32 trueMax = 172; // https://www.3dbrew.org/wiki/GSPLCD:SetBrightnessRaw
-    u32 trueMin = 6;
+    const u32 minLum = getMinLuminancePreset();
+    const u32 maxLum = getMaxLuminancePreset();
+    const u32 trueMax = 172; // https://www.3dbrew.org/wiki/GSPLCD:SetBrightnessRaw
+    const u32 trueMin = 6;
     // hacky but N3DS coeffs for top screen don't seem to work and O3DS coeffs when using N3DS return 173 max brightness
     luminanceTop = luminanceTop == 173 ? trueMax : luminanceTop;
 
@@ -502,7 +502,8 @@ void SysConfigMenu_ChangeScreenBrightness(void)
         posY = Draw_DrawString(10, posY, COLOR_TITLE, "Press A to begin, B to exit.\n\n");
 
         posY = Draw_DrawString(10, posY, COLOR_RED, "WARNING: \n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * values can glitch >172, do not use these!\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * top screen may not respect boundaries.\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    this is tested and confirmed to be safe.\n");
         posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * all changes revert on shell reopening.\n");
         posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * bottom framebuffer will be visible until exit.\n");
         Draw_FlushFramebuffer();
@@ -597,7 +598,7 @@ void SysConfigMenu_ChangeScreenBrightness(void)
                 lumBot = lumBot < (s32)minLum ? (s32)minLum : lumBot;
             }
 
-            if (lumTop >= (s32)minLum && lumBot >= (s32)minLum) {
+            if (lumTop >= (s32)trueMin && lumBot >= (s32)trueMin) {
                 GSPLCD_SetBrightnessRaw(BIT(GSP_SCREEN_TOP), lumTop);
                 GSPLCD_SetBrightnessRaw(BIT(GSP_SCREEN_BOTTOM), lumBot);
             }
