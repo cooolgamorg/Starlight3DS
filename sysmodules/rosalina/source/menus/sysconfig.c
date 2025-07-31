@@ -460,10 +460,6 @@ void SysConfigMenu_ChangeScreenBrightness(void)
     u32 luminanceBot = getCurrentLuminance(false);
     const u32 minLum = getMinLuminancePreset();
     const u32 maxLum = getMaxLuminancePreset();
-    const u32 trueMax = 172; // https://www.3dbrew.org/wiki/GSPLCD:SetBrightnessRaw
-    const u32 trueMin = 6;
-    // hacky but N3DS coeffs for top screen don't seem to work and O3DS coeffs when using N3DS return 173 max brightness
-    luminanceTop = luminanceTop == 173 ? trueMax : luminanceTop;
 
     do
     {
@@ -474,38 +470,32 @@ void SysConfigMenu_ChangeScreenBrightness(void)
             10,
             posY,
             COLOR_WHITE,
-            "Preset: %lu to %lu, Extended: %lu to %lu.\n\n",
-            minLum,
-            maxLum,
-            trueMin,
-            trueMax
-        );
-        posY = Draw_DrawFormattedString(
-            10,
-            posY,
-            luminanceTop > trueMax ? COLOR_RED : COLOR_WHITE,
             "Top screen luminance: %lu\n",
             luminanceTop
         );
         posY = Draw_DrawFormattedString(
             10,
             posY,
-            luminanceBot > trueMax ? COLOR_RED : COLOR_WHITE,
+            COLOR_WHITE,
             "Bottom screen luminance: %lu \n\n",
             luminanceBot
+        );
+        posY = Draw_DrawFormattedString(
+            10,
+            posY,
+            COLOR_WHITE,
+            "Preset: %lu to %lu\n\n",
+            minLum,
+            maxLum
         );
         posY = Draw_DrawString(10, posY, COLOR_GREEN, "Controls:\n");
         posY = Draw_DrawString(10, posY, COLOR_WHITE, "Up/Down for +/-1, Right/Left for +/-10.\n");
         posY = Draw_DrawString(10, posY, COLOR_WHITE, "Hold X/Y for Top/Bottom screen only. \n");
-        posY = Draw_DrawFormattedString(10, posY, COLOR_WHITE, "Hold L/R for extended limits (<%lu may glitch). \n", minLum);
 
         posY = Draw_DrawString(10, posY, COLOR_TITLE, "Press A to begin, B to exit.\n\n");
 
         posY = Draw_DrawString(10, posY, COLOR_RED, "WARNING: \n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * top screen may not respect the limits,\n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    please be careful while using this.\n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "    (more details in the readme on github)\n");
-        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * all changes revert on shell reopening.\n");
+        posY = Draw_DrawString(10, posY, COLOR_WHITE, "  * all changes revert on shell reopening.");
         Draw_FlushFramebuffer();
         Draw_Unlock();
 
@@ -583,27 +573,17 @@ void SysConfigMenu_ChangeScreenBrightness(void)
                 }
             }
 
-            if (kHeld & (KEY_L | KEY_R))
-            {
-                lumTop = lumTop > (s32)trueMax ? (s32)trueMax : lumTop;
-                lumBot = lumBot > (s32)trueMax ? (s32)trueMax : lumBot;
-                lumTop = lumTop < (s32)trueMin ? (s32)trueMin : lumTop;
-                lumBot = lumBot < (s32)trueMin ? (s32)trueMin : lumBot;
-            }
-            else
-            {
-                lumTop = lumTop > (s32)maxLum ? (s32)maxLum : lumTop;
-                lumBot = lumBot > (s32)maxLum ? (s32)maxLum : lumBot;
-                lumTop = lumTop < (s32)minLum ? (s32)minLum : lumTop;
-                lumBot = lumBot < (s32)minLum ? (s32)minLum : lumBot;
-            }
+            lumTop = lumTop > (s32)maxLum ? (s32)maxLum : lumTop;
+            lumBot = lumBot > (s32)maxLum ? (s32)maxLum : lumBot;
+            lumTop = lumTop < (s32)minLum ? (s32)minLum : lumTop;
+            lumBot = lumBot < (s32)minLum ? (s32)minLum : lumBot;
 
-            if (lumTop >= (s32)trueMin && lumBot >= (s32)trueMin) {
+            if (kHeld & KEY_X) {
                 GSPLCD_SetBrightnessRaw(BIT(GSP_SCREEN_TOP), lumTop);
+            } else if (kHeld & KEY_Y) {
                 GSPLCD_SetBrightnessRaw(BIT(GSP_SCREEN_BOTTOM), lumBot);
-            }
-            else {
-                setBrightnessAlt(lumTop, lumBot);
+            } else {
+                GSPLCD_SetBrightnessRaw(BIT(GSP_SCREEN_TOP) | BIT(GSP_SCREEN_BOTTOM), lumTop);
             }
         }
         
