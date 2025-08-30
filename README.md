@@ -4,9 +4,12 @@
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/cooolgamorg/Starlight3DS/total)
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
-*Nintendo 3DS "Custom Firmware"*
-
 **Please check the [Official Luma3DS readme](https://github.com/LumaTeam/Luma3DS) for more info!**
+
+# Important
+
+### Starlight3DS is no longer maintained, this project is being migrated to [Nexus3DS](https://github.com/2b-zipper/Nexus3DS)
+As the time of writing this, Nexus3DS is not released yet, you can still use Starlight3DS, but it won't receive any updates anymore.
 
 ## What it is
 **Starlight3DS** is an unofficial fork of [Luma3DS](https://github.com/LumaTeam/Luma3DS) with more features, this is a continuation of [DullPointer's luma fork](https://github.com/DullPointer/Luma3DS) where most features are taken from it and made compatible for the latest Luma3DS version at the time of writing this.
